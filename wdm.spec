@@ -5,7 +5,7 @@ Version:	1.19
 Release:	3
 License:	GPL
 Group:		X11/XFree86
-Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
+Source0:	http://voins.program.ru/wdm/%{name}-%{version}.tar.gz
 # Source0-md5:	eacbfec965f2ccf1840ad457cb04a67e
 Source1:	xdm-3331.tar.gz
 # Source1-md5:	bb8feac2f37bb22d708fdfb80efc8417
@@ -17,9 +17,9 @@ Patch1:		%{name}-configure.patch
 Patch2:		%{name}-wraster.patch
 Patch3:		%{name}-pam.patch
 Patch4:		%{name}-xdm3331.patch
-URL:		http://www.tcscs.com/wdm/
-BuildRequires:	autoconf
+URL:		http://voins.program.ru/wdm/
 BuildRequires:	XFree86-devel >= 3.3.2
+BuildRequires:	autoconf
 Prereq:		rc-scripts
 Requires:	pam >= 0.77.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -77,7 +77,7 @@ zaimplementowanym z u¿yciem biblioteki widgetów WING z WindowMakera.
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
-cp -f %{PATCH3} patches/
+cp -f %{PATCH3} patches
 cp -f %{SOURCE1} .
 cp -f %{SOURCE4} src/config/Xclients.in
 
@@ -91,7 +91,8 @@ cp -f %{SOURCE4} src/config/Xclients.in
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,security}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
