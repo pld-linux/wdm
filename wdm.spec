@@ -6,6 +6,7 @@ Release:	2
 License:	GPL
 Group:		X11/XFree86
 Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
+# Source0-md5:	eacbfec965f2ccf1840ad457cb04a67e
 Source1:	xdm-3331.tar.gz
 Source2:	%{name}.init
 Source3:	%{name}.pamd
