@@ -18,7 +18,7 @@ Requires:	XFree86 => 3.3.2
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		_prefix	/usr/X11R6
-%define		_mandir /usr/X11R6/man
+%define		_mandir %{_prefix}/man
 
 %description
 wdm is a modification/enhancement of XFree86's xdm which 
@@ -90,10 +90,10 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
 touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
 
-strip --strip-unneeded $RPM_BUILD_ROOT/usr/X11R6/bin/* || :
+strip --strip-unneeded $RPM_BUILD_ROOT%{_bindir}/* || :
 
 gzip -9nf AUTHORS ChangeLog NEWS README README.pam TODO \
-	$RPM_BUILD_ROOT/usr/X11R6/man/man1/*
+	$RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %post
 /etc/X11/wdm/wdmReconfig
@@ -104,9 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {AUTHORS,ChangeLog,NEWS,README,README.pam,TODO}.gz
-%attr(755,root,root) /usr/X11R6/bin/wdm
-%attr(755,root,root) /usr/X11R6/bin/wdmLogin
-/usr/X11R6/man/man1/*
+%attr(755,root,root) %{_bindir}/wdm
+%attr(755,root,root) %{_bindir}/wdmLogin
+%{_mandir}/man1/*
 
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/wdm
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.wdm
