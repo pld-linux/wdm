@@ -24,6 +24,7 @@ BuildRequires:	automake
 Prereq:		rc-scripts
 Requires:	pam >= 0.77.3
 Obsoletes:	X11-xdm
+Obsoletes:	entrance
 Obsoletes:	gdm
 Obsoletes:	kdm
 Obsoletes:	xdm
