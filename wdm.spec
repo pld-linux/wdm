@@ -7,7 +7,7 @@ Patch1:   wdm-1.0-errmsg.patch
 Packager: Gene Czarcinski <genec@mindspring.com>
 Group:    X11/XFree86
 Requires: XFree86 => 3.3.2
-BuildRoot: /tmp/wdm-root
+BuildRoot:	/tmp/%{name}-%{version}-root
 Summary: WINGs Display Manager
 
 %description
