@@ -1,10 +1,11 @@
 Summary:	WINGs Display Manager
+Summary(pl):	Display Manager bazuj±cy na WING
 Name:		wdm
 Version:	1.19
 Release:	1
-Copyright:	GPL
+License:	GPL
 Group:		X11/XFree86
-Source0:	%{name}-%{version}.tar.gz
+Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
 Source1:	xdm-3331.tar.gz
 Source2:	wdm.initd
 Source3:	wdm.pamd
@@ -14,12 +15,14 @@ Patch1:		wdm-configure.patch
 Patch2:		wdm-wraster.patch
 Patch3:		wdm-pam.patch
 Patch4:		wdm-xdm3331.patch
+URL:		http://www.tcscs.com/wdm/
 Requires:	XFree86 => 3.3.2
 Prereq:		rc-scripts
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix	/usr/X11R6
-%define		_mandir %{_prefix}/man
+%define		_prefix		/usr/X11R6
+%define		_mandir		%{_prefix}/man
 
 %description
 wdm is a modification/enhancement of XFree86's xdm which 
@@ -64,6 +67,11 @@ there is nothing like editing these files to tailor them to a
 particular system.  This script can be run manually if new window
 managers are installed.
 
+%description -l pl
+wdm jest modyfikacj±/rozszerzeniem xdm dodaj±cym panel logowania
+o wiêkszych mo¿liwo¶ciach. Panel jest oddzielnym programem
+zaimplementowanym z u¿yciem biblioteki widgetów WING z WindowMakera.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -91,14 +99,13 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
 touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
 
-gzip -9nf AUTHORS ChangeLog NEWS README README.pam TODO \
-	$RPM_BUILD_ROOT%{_mandir}/man1/*
-
-%post
-/etc/X11/wdm/wdmReconfig
+gzip -9nf AUTHORS ChangeLog NEWS README README.pam TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+/etc/X11/wdm/wdmReconfig
 
 %files
 %defattr(644,root,root,755)
