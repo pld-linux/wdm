@@ -75,7 +75,7 @@ managers are installed.
 %patch1 -p1
 
 %build
-CFLAGS="${RPM_OPT_FLAGS}" ./configure \
+CFLAGS="${RPM_OPT_FLAGS}" ./configure %{_target} \
 	    --enable-pam \
 	    --prefix=/usr/X11R6 \
 	    --with-wdmdir=/etc/X11/wdm
