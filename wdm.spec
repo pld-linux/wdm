@@ -79,7 +79,7 @@ autoconf
 %configure \
 	--enable-pam \
 	--with-wdmdir=/etc/X11/wdm
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
