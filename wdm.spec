@@ -37,7 +37,7 @@ the install location prefix of /usr/X11R6 is used.  wdm's configuration
 directory is /etc/X11/wdm.
 
 Note:  This rpm has been compiled assuming that the path for the
-wmaker program is /usr/bin/wmaker and the path for the afterstep
+wmaker program is %{_bindir}/wmaker and the path for the afterstep
 program is /usr/X11R6/bin/afterstep.  If this is incorrect for your
 system, then the file /etc/X11/wdm/Xclients must be modified to reflect
 the correct locations.
