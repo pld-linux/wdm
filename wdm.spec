@@ -5,8 +5,6 @@ Version:	1.19
 Release:	2
 License:	GPL
 Group:		X11/XFree86
-Group(de):	X11/XFree86
-Group(pl):	X11/XFree86
 Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
 Source1:	xdm-3331.tar.gz
 Source2:	%{name}.initd
