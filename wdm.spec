@@ -1,14 +1,24 @@
-Name:    wdm
-Version: 1.0
-Release: 3
-Copyright: Copyright 1998 Gene Czarcinski - GPL
-Source0:  wdm-%{PACKAGE_VERSION}.tar.gz
-Patch1:   wdm-1.0-errmsg.patch
-Packager: Gene Czarcinski <genec@mindspring.com>
-Group:    X11/XFree86
-Requires: XFree86 => 3.3.2
+Summary:	WINGs Display Manager
+Name:		wdm
+Version:	1.0
+Release:	3
+Copyright:	GPL
+Group:		X11/XFree86
+Source0:	%{name}-%{version}.tar.gz
+Source1:	xdm-3331.tar.gz
+Source2:	wdm.initd
+Source3:	wdm.pamd
+Source4:	wdm-Xclients.in
+Patch0:		wdm-errmsg.patch
+Patch1:		wdm-configure.patch
+Patch2:		wdm-wraster.patch
+Patch3:		wdm-pam.patch
+Patch4:		wdm-xdm3331.patch
+Requires:	XFree86 => 3.3.2
 BuildRoot:	/tmp/%{name}-%{version}-root
-Summary: WINGs Display Manager
+
+%define		_prefix	/usr/X11R6
+%define		_mandir /usr/X11R6/man
 
 %description
 wdm is a modification/enhancement of XFree86's xdm which 
@@ -52,3 +62,68 @@ and Xclients files.  Although this shell script can do a reasonable job,
 there is nothing like editing these files to tailor them to a
 particular system.  This script can be run manually if new window
 managers are installed.
+
+%prep
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch4 -p1
+cp -f %{PATCH3} patches/
+cp -f %{SOURCE1} .
+cp -f %{SOURCE4} src/config/Xclients.in
+
+%build
+autoconf
+%configure \
+	--enable-pam \
+	--with-wdmdir=/etc/X11/wdm
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+make DESTDIR=$RPM_BUILD_ROOT install
+
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,security}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
+touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
+
+strip --strip-unneeded $RPM_BUILD_ROOT/usr/X11R6/bin/* || :
+
+gzip -9nf AUTHORS ChangeLog NEWS README README.pam TODO \
+	$RPM_BUILD_ROOT/usr/X11R6/man/man1/*
+
+%post
+/etc/X11/wdm/wdmReconfig
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+%doc {AUTHORS,ChangeLog,NEWS,README,README.pam,TODO}.gz
+%attr(755,root,root) /usr/X11R6/bin/wdm
+%attr(755,root,root) /usr/X11R6/bin/wdmLogin
+/usr/X11R6/man/man1/*
+
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/wdm
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.wdm
+%attr(754,root,root) /etc/rc.d/init.d/wdm
+
+%dir    /etc/X11/wdm
+%dir    /etc/X11/wdm/authdir
+%config /etc/X11/wdm/pixmaps
+%config /etc/X11/wdm/wdm-config
+%config /etc/X11/wdm/wdm-config.in
+%config /etc/X11/wdm/Xservers
+%config /etc/X11/wdm/Xresources
+%config /etc/X11/wdm/Xaccess
+%attr(755,root,root) %config /etc/X11/wdm/Xsetup_0
+%attr(755,root,root) %config /etc/X11/wdm/Xsession
+%attr(755,root,root) %config /etc/X11/wdm/Xclients
+%attr(755,root,root) %config /etc/X11/wdm/Xclients.in
+%attr(755,root,root) %config /etc/X11/wdm/TakeConsole
+%attr(755,root,root) %config /etc/X11/wdm/GiveConsole
+%attr(755,root,root) %config /etc/X11/wdm/wdmReconfig
