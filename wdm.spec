@@ -17,6 +17,7 @@ Patch1:		%{name}-Makefile.patch
 Patch2:		%{name}-xdm3331.patch
 Patch3:		%{name}-pam.patch
 URL:		http://voins.program.ru/wdm/
+BuildRequires:	WindowMaker-devel
 BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
 Prereq:		rc-scripts
