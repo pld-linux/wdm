@@ -17,6 +17,8 @@ Patch1:		%{name}-configure.patch
 Patch2:		%{name}-wraster.patch
 Patch3:		%{name}-pam.patch
 Patch4:		%{name}-xdm3331.patch
+Patch5:		%{name}-aclocal.patch
+Patch6:		%{name}-Makefile.patch
 URL:		http://voins.program.ru/wdm/
 BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
@@ -73,16 +75,20 @@ zaimplementowanym z u¿yciem biblioteki widgetów WING z WindowMakera.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 cp -f %{PATCH3} patches
 cp -f %{SOURCE1} .
 cp -f %{SOURCE4} src/config/Xclients.in
 
 %build
+%{__aclocal}
 %{__autoconf}
+%{__automake}
 %configure \
 	--enable-pam \
 --with-wdmdir=%{_sysconfdir}/X11/wdm
