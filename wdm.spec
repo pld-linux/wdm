@@ -82,7 +82,7 @@ cp -f %{SOURCE1} .
 cp -f %{SOURCE4} src/config/Xclients.in
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--enable-pam \
 --with-wdmdir=%{_sysconfdir}/X11/wdm
