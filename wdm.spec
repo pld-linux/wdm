@@ -98,8 +98,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
 touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
 
-gzip -9nf AUTHORS ChangeLog NEWS README README.pam TODO
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -108,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {AUTHORS,ChangeLog,NEWS,README,README.pam,TODO}.gz
+%doc AUTHORS ChangeLog NEWS README README.pam TODO
 %attr(755,root,root) %{_bindir}/wdm
 %attr(755,root,root) %{_bindir}/wdmLogin
 %{_mandir}/man1/*
