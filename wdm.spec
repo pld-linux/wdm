@@ -91,8 +91,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
 touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
 
-strip --strip-unneeded $RPM_BUILD_ROOT%{_bindir}/* || :
-
 gzip -9nf AUTHORS ChangeLog NEWS README README.pam TODO \
 	$RPM_BUILD_ROOT%{_mandir}/man1/*
 
