@@ -8,6 +8,7 @@ Group:		X11/XFree86
 Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
 # Source0-md5:	eacbfec965f2ccf1840ad457cb04a67e
 Source1:	xdm-3331.tar.gz
+# Source1-md5:	bb8feac2f37bb22d708fdfb80efc8417
 Source2:	%{name}.init
 Source3:	%{name}.pamd
 Source4:	%{name}-Xclients.in
@@ -21,7 +22,6 @@ BuildRequires:	autoconf
 BuildRequires:	XFree86-devel >= 3.3.2
 Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 
 %description
 wdm is a modification/enhancement of XFree86's xdm which provides a
