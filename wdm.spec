@@ -2,7 +2,7 @@ Summary:	WINGs Display Manager
 Summary(pl):	Display Manager bazuj±cy na WING
 Name:		wdm
 Version:	1.19
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/XFree86
 Group(de):	X11/XFree86
@@ -115,7 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/wdmLogin
 %{_mandir}/man1/*
 
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/wdm
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/wdm
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.wdm
 %attr(754,root,root) /etc/rc.d/init.d/wdm
 
