@@ -20,6 +20,7 @@ URL:		http://voins.program.ru/wdm/
 BuildRequires:	WindowMaker-devel
 BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
+BuildRequires:	automake
 Prereq:		rc-scripts
 Requires:	pam >= 0.77.3
 Obsoletes:	X11-xdm
