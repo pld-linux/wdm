@@ -7,7 +7,7 @@ License:	GPL
 Group:		X11/XFree86
 Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
 Source1:	xdm-3331.tar.gz
-Source2:	%{name}.initd
+Source2:	%{name}.init
 Source3:	%{name}.pamd
 Source4:	%{name}-Xclients.in
 Patch0:		%{name}-errmsg.patch
