@@ -2,7 +2,7 @@ Summary:	WINGs Display Manager
 Summary(pl):	Display Manager bazuj±cy na WING
 Name:		wdm
 Version:	1.19
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/XFree86
 Source0:	http://www.tcscs.com/wdm/wdm/%{name}-%{version}.tar.gz
