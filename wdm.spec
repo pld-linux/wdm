@@ -21,8 +21,6 @@ BuildRequires:	XFree86-devel >= 3.3.2
 Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix		/usr/X11R6
-%define		_mandir		%{_prefix}/man
 
 %description
 wdm is a modification/enhancement of XFree86's xdm which provides a
