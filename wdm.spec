@@ -15,6 +15,7 @@ Patch2:		wdm-wraster.patch
 Patch3:		wdm-pam.patch
 Patch4:		wdm-xdm3331.patch
 Requires:	XFree86 => 3.3.2
+Requires:	rc-scripts
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define		_prefix	/usr/X11R6
