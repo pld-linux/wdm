@@ -30,7 +30,7 @@ case "$1" in
 	rm -f /var/lock/subsys/wdm
 	;;
   status)
-	status xfs
+	status wdm
 	;;
   restart)
 	$0 stop
