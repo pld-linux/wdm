@@ -1,7 +1,7 @@
 Summary:	WINGs Display Manager
 Name:		wdm
-Version:	1.0
-Release:	3
+Version:	1.19
+Release:	1
 Copyright:	GPL
 Group:		X11/XFree86
 Source0:	%{name}-%{version}.tar.gz
