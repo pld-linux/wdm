@@ -1,0 +1,15 @@
+diff -burN wdm-1.19.orig/aclocal.m4 wdm-1.19/aclocal.m4
+--- wdm-1.19.orig/aclocal.m4	2004-04-04 23:13:10.702182832 +0200
++++ wdm-1.19/aclocal.m4	2004-04-04 23:20:36.988337024 +0200
+@@ -46,11 +46,6 @@
+ 
+ # serial 1
+ 
+-AC_DEFUN(AM_PROG_INSTALL,
+-[AC_REQUIRE([AC_PROG_INSTALL])
+-test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL_PROGRAM}'
+-AC_SUBST(INSTALL_SCRIPT)dnl
+-])
+ 
+ #
+ # Check to make sure that the build environment is sane.

@@ -1,0 +1,13 @@
+diff -burN wdm-1.19.orig/src/Makefile.am wdm-1.19/src/Makefile.am
+--- wdm-1.19.orig/src/Makefile.am	2004-04-04 23:13:10.690184656 +0200
++++ wdm-1.19/src/Makefile.am	2004-04-04 23:56:15.173283504 +0200
+@@ -270,8 +270,7 @@
+ 	patch -p2 <../patches/xdm-3.3.2-pamwdm.patch
+ 	touch LinksDone
+ 
+-
+-CLEANFILES += chooser.c \
++CLEANFILES = chooser.c \
+ 		dm.h \
+ 		greet.h \
+ 		$(xdm_sources) \
