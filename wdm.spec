@@ -12,13 +12,10 @@ Source1:	xdm-3331.tar.gz
 Source2:	%{name}.init
 Source3:	%{name}.pamd
 Source4:	%{name}-Xclients.in
-Patch0:		%{name}-errmsg.patch
-Patch1:		%{name}-configure.patch
-Patch2:		%{name}-wraster.patch
+Patch0:		%{name}-aclocal.patch
+Patch1:		%{name}-Makefile.patch
+Patch2:		%{name}-xdm3331.patch
 Patch3:		%{name}-pam.patch
-Patch4:		%{name}-xdm3331.patch
-Patch5:		%{name}-aclocal.patch
-Patch6:		%{name}-Makefile.patch
 URL:		http://voins.program.ru/wdm/
 BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
@@ -75,12 +72,9 @@ zaimplementowanym z u¿yciem biblioteki widgetów WING z WindowMakera.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 cp -f %{PATCH3} patches
 cp -f %{SOURCE1} .
 cp -f %{SOURCE4} src/config/Xclients.in
