@@ -21,6 +21,7 @@ URL:		http://www.tcscs.com/wdm/
 BuildRequires:	autoconf
 BuildRequires:	XFree86-devel >= 3.3.2
 Prereq:		rc-scripts
+Requires:	pam >= 0.77.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
