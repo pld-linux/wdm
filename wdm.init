@@ -17,17 +17,17 @@
 
 . /etc/rc.d/init.d/functions
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
 	if [ ! -f /var/lock/subsys/wdm ]; then
 		msg_starting "X daemon"
 		daemon /usr/X11R6/bin/wdm
-		touch /var/lock/subsys/wdm
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/wdm
 	else
 		msg_already_running "X daemon"
-		exit 1
 	fi
 	;;
   stop)
@@ -37,24 +37,20 @@ case "$1" in
 		rm -f /var/lock/subsys/wdm
 	else
 		msg_not_running "X daemon"
-		exit 1
 	fi
 	;;
   status)
 	status wdm
+	exit $?
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
 	exit $?
 	;;
-  force-reload)
-	$0 stop && $0 start
-	exit $?
-	;;
   *)
-	msg_usage $0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	msg_usage $0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
-exit 0
+exit $RETVAL
