@@ -1,0 +1,193 @@
+--- xdm/verify.c.nopam	Tue May 27 02:22:28 1997
++++ xdm/verify.c	Wed Apr 14 22:18:11 1999
+@@ -41,6 +41,9 @@
+ 
+ # include	"dm.h"
+ # include	<pwd.h>
++#ifdef USE_PAM
++# include	<security/pam_appl.h>
++#else /* ! USE_PAM */
+ #ifdef USESHADOW
+ # include	<shadow.h>
+ #if defined(SHADOWSUITE) && defined(linux)
+@@ -51,6 +54,7 @@
+ extern int errno;
+ #endif
+ #endif
++#endif /* USE_PAM */
+ 
+ # include	"greet.h"
+ 
+@@ -104,6 +108,52 @@
+     return env;
+ }
+ 
++#ifdef USE_PAM
++static char *PAM_password;
++
++pam_handle_t *pamh;
++static int pam_error;
++
++static int PAM_conv (int num_msg,
++		     const struct pam_message **msg,
++		     struct pam_response **resp,
++		     void *appdata_ptr) {
++	int replies = 0;
++	struct pam_response *reply = NULL;
++
++	reply = malloc(sizeof(struct pam_response));
++	if (!reply) return PAM_CONV_ERR;
++	#define COPY_STRING(s) (s) ? strdup(s) : NULL
++
++	for (replies = 0; replies < num_msg; replies++) {
++		switch (msg[replies]->msg_style) {
++		case PAM_PROMPT_ECHO_OFF:
++			/* wants password */
++			reply[replies].resp_retcode = PAM_SUCCESS;
++			reply[replies].resp = COPY_STRING(PAM_password);
++			break;
++		case PAM_TEXT_INFO:
++			/* ignore the informational mesage */
++			break;
++		case PAM_PROMPT_ECHO_ON:
++			/* user name given to PAM already */
++			/* fall through */
++		default:
++			/* unknown or PAM_ERROR_MSG */
++			free (reply);
++			return PAM_CONV_ERR;
++		}
++	}
++	*resp = reply;
++	return PAM_SUCCESS;
++}
++
++static struct pam_conv PAM_conversation = {
++	&PAM_conv,
++	NULL
++};
++#endif
++
+ int
+ Verify (d, greet, verify)
+ struct display		*d;
+@@ -131,6 +181,7 @@
+ 	} else {
+ 	    user_pass = p->pw_passwd;
+ 	}
++#ifndef USE_PAM
+ #ifdef USESHADOW
+ 	errno = 0;
+ 	sp = getspnam(greet->name);
+@@ -153,6 +204,27 @@
+ 			return 0;
+ 		} /* else: null passwd okay */
+ 	}
++#else /* USE_PAM */
++	#define PAM_BAIL if (pam_error != PAM_SUCCESS) { \
++	   pam_end(pamh, 0); return 0; \
++	 }
++	PAM_password = greet->password;
++	pam_error = pam_start("xdm", p->pw_name, &PAM_conversation, &pamh);
++	PAM_BAIL;
++	pam_error = pam_set_item(pamh, PAM_TTY, d->name);
++	PAM_BAIL;
++	pam_error = pam_authenticate(pamh, 0);
++	PAM_BAIL;
++	pam_error = pam_acct_mgmt(pamh, 0);
++	/* really should do password changing, but it doesn't fit well */
++	PAM_BAIL;
++	pam_error = pam_setcred(pamh, 0);
++	PAM_BAIL;
++	/*
++	  Session management is accompilished later, in session.c,
++	  so no need to call pam_end here.
++	*/
++#endif /* USE_PAM */
+ 	Debug ("verify succeeded\n");
+ 	bzero(user_pass, strlen(user_pass)); /* in case shadow password */
+ 	/* The password is passed to StartClient() for use by user-based
+--- xdm/session.c.nopam	Sat Oct 24 03:57:19 1998
++++ xdm/session.c	Wed Apr 14 17:45:19 1999
+@@ -55,6 +55,12 @@
+ #ifdef K5AUTH
+ # include <krb5/krb5.h>
+ #endif
++#ifdef USE_PAM
++# include <security/pam_appl.h>
++#endif
++#ifdef USESHADOW
++# include <shadow.h>
++#endif
+ 
+ #ifndef GREET_USER_STATIC
+ #include <dlfcn.h>
+@@ -141,6 +147,10 @@
+ 
+ static Jmp_buf	abortSession;
+ 
++#ifdef USE_PAM
++extern pam_handle_t *pamh;
++#endif
++
+ /* ARGSUSED */
+ static SIGVAL
+ catchTerm (n)
+@@ -482,6 +492,14 @@
+ 	    }
+ 	}
+ #endif /* K5AUTH */
++#ifdef USE_PAM
++	if (pamh) {
++	  /* shutdown PAM session */
++	  pam_close_session(pamh, 0);
++	  pam_end(pamh, PAM_SUCCESS);
++	  pamh = NULL;
++	}
++#endif
+     }
+     Debug ("Display %s exiting with status %d\n", d->name, status);
+     exit (status);
+@@ -513,6 +531,9 @@
+ 		Debug ("%s ", *f);
+ 	Debug ("\n");
+     }
++#ifdef USE_PAM
++    if (pamh) pam_open_session(pamh, 0);
++#endif    
+     switch (pid = fork ()) {
+     case 0:
+ 	CleanUpChild ();
+@@ -699,6 +699,32 @@
+ #endif /* K5AUTH */
+ 	bzero(passwd, strlen(passwd));
+ 	SetUserAuthorization (d, verify);
++#ifdef USE_PAM
++{
++	int i, j;
++	const char *const *pam_env;
++	char *tmp_pam_env;
++
++	pam_env = (const char *const *) pam_getenvlist((pam_handle_t *) pamh);
++
++	if (pam_env != NULL) {
++		tmp_pam_env = malloc(4096);
++		if (tmp_pam_env != NULL) {
++			for (i = 0; pam_env[i]; i++) {
++				Debug("env[%d] = %s\n", i, pam_env[i]);
++				strncpy(tmp_pam_env, pam_env[i], 4095);
++				tmp_pam_env[4095] = 0;
++				j = 0;
++				while (tmp_pam_env[j] != '=')
++					j++;
++				tmp_pam_env[j] = 0;
++				verify->userEnviron = setEnv(verify->userEnviron, tmp_pam_env, &tmp_pam_env[j + 1]);
++			}
++		}
++		free(tmp_pam_env);
++	}
++}
++#endif
+ 	home = getEnv (verify->userEnviron, "HOME");
+ 	if (home)
+ 	    if (chdir (home) == -1) {

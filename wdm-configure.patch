@@ -1,0 +1,24 @@
+diff -ur wdm-1.0/configure.in wdm-1.0.new/configure.in
+--- wdm-1.0/configure.in	Sun Sep 13 17:31:13 1998
++++ wdm-1.0.new/configure.in	Mon Jul 12 15:39:25 1999
+@@ -379,7 +379,7 @@
+ 	AC_MSG_RESULT(using standard versions)
+ 	AC_CHECK_LIB(wraster, RCreateImage, 
+ 		[WINGsOK=yes],,
+-		$GFX_INC_PATH $GFX_LIB_PATH $XLFLAGS $XLIBS)
++		$GFX_INC_PATH $GFX_LIB_PATH $XLFLAGS $XLIBS -lungif -lpng -ltiff -lXpm -ljpeg)
+ fi
+ 
+ if test "$WINGsOK" = no; then
+diff -ur wdm-1.0/configure.in wdm-1.0.new/configure.in
+--- wdm-1.0/configure.in	Mon Jul 12 15:42:03 1999
++++ wdm-1.0.new/configure.in	Mon Jul 12 15:43:18 1999
+@@ -15,7 +15,7 @@
+ 
+ AM_SANITY_CHECK
+ 
+-AM_PROG_INSTALL
++dnl AM_PROG_INSTALL
+ 
+ AC_PROG_CC
+ AC_PROG_INSTALL

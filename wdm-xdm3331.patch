@@ -1,0 +1,35 @@
+diff -ur wdm-1.0.orig/configure.in wdm-1.0/configure.in
+--- wdm-1.0.orig/configure.in	Mon Jul 12 22:12:01 1999
++++ wdm-1.0/configure.in	Mon Jul 12 22:12:22 1999
+@@ -144,8 +144,8 @@
+ AC_MSG_RESULT($xdmexists)
+ 
+ if test "$xdmexists" = no; then
+-    AC_MSG_CHECKING([check if xdm-332.tar.gz exists])
+-    if test -f xdm-332.tar.gz; then
++    AC_MSG_CHECKING([check if xdm-3331.tar.gz exists])
++    if test -f xdm-3331.tar.gz; then
+ 	xdmtarexists=yes
+     else
+ 	xdmtarexists=no
+@@ -153,7 +153,7 @@
+     AC_MSG_RESULT($xdmtarexists)
+     
+     if test "$xdmtarexists" = yes; then
+-	(gunzip -c xdm-332.tar.gz | tar xf -)
++	(gunzip -c xdm-3331.tar.gz | tar xf -)
+     fi
+ 
+     AC_MSG_CHECKING(again if xdm source exists)
+diff -ur wdm-1.0.orig/src/Makefile.in wdm-1.0/src/Makefile.in
+--- wdm-1.0.orig/src/Makefile.in	Sun Sep 13 17:47:25 1998
++++ wdm-1.0/src/Makefile.in	Mon Jul 12 22:12:56 1999
+@@ -659,7 +659,7 @@
+ 	cp -pf ../xdm/resource.c resource.c
+ 	patch -p1 <../patches/xdm-3.3.2-resource2.patch
+ 	cp -pf ../xdm/greeter/verify.c verify.c
+-	patch -p2 <../patches/xdm-3.3.2-pamwdm.patch
++	patch -p1 <../patches/wdm-pam.patch
+ 	touch LinksDone
+ 
+ CLEANFILES += chooser.c \
