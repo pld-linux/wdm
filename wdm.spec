@@ -84,7 +84,7 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make DESTDIR=$RPM_BUILD_ROOT install
+%{__make} DESTDIR=$RPM_BUILD_ROOT install
 
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,security}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
