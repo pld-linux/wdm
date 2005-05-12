@@ -2,7 +2,7 @@ Summary:	WINGs Display Manager
 Summary(pl):	Display Manager bazuj±cy na WING
 Name:		wdm
 Version:	1.19
-Release:	4
+Release:	5
 License:	GPL
 Group:		X11/XFree86
 Source0:	http://voins.program.ru/wdm/%{name}-%{version}.tar.gz
@@ -22,7 +22,7 @@ BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
 BuildRequires:	automake
 Prereq:		rc-scripts
-Requires:	pam >= 0.77.3
+Requires:	pam >= 0.79.0
 Obsoletes:	X11-xdm
 Obsoletes:	entrance
 Obsoletes:	gdm
