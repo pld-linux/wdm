@@ -4,7 +4,7 @@ Name:		wdm
 Version:	1.19
 Release:	5
 License:	GPL
-Group:		X11/XFree86
+Group:		X11
 Source0:	http://voins.program.ru/wdm/%{name}-%{version}.tar.gz
 # Source0-md5:	eacbfec965f2ccf1840ad457cb04a67e
 Source1:	xdm-3331.tar.gz
@@ -21,7 +21,7 @@ BuildRequires:	WindowMaker-devel
 BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
 BuildRequires:	automake
-Prereq:		rc-scripts
+Requires:	rc-scripts
 Requires:	pam >= 0.79.0
 Obsoletes:	X11-xdm
 Obsoletes:	entrance
@@ -94,7 +94,7 @@ cp -f %{SOURCE4} src/config/Xclients.in
 	--enable-pam \
 	--with-wdmdir=%{_sysconfdir}/X11/wdm
 %{__make} \
-	CFLAGS="%{rpmcflags} -I/usr/include/WINGs"
+	CFLAGS="%{rpmcflags} -I%{_includedir}/WINGs"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -120,8 +120,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/wdmLogin
 %{_mandir}/man1/*
 
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/wdm
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.wdm
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/wdm
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.wdm
 %attr(754,root,root) /etc/rc.d/init.d/wdm
 
 %dir %{_sysconfdir}/X11/wdm
