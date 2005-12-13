@@ -21,8 +21,8 @@ BuildRequires:	WindowMaker-devel
 BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
 BuildRequires:	automake
-Requires:	rc-scripts
 Requires:	pam >= 0.79.0
+Requires:	rc-scripts
 Obsoletes:	X11-xdm
 Obsoletes:	entrance
 Obsoletes:	gdm
