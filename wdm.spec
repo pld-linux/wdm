@@ -94,7 +94,7 @@ cp -f %{SOURCE4} src/config/Xclients.in
 	--enable-pam \
 	--with-wdmdir=%{_sysconfdir}/X11/wdm
 %{__make} \
-	CFLAGS="%{rpmcflags} -I%{_includedir}/WINGs"
+	CFLAGS="%{rpmcflags} -I/usr/include/WINGs"
 
 %install
 rm -rf $RPM_BUILD_ROOT
