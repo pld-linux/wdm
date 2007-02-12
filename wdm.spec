@@ -1,5 +1,5 @@
 Summary:	WINGs Display Manager
-Summary(pl.UTF-8):   Display Manager bazujący na WING
+Summary(pl.UTF-8):	Display Manager bazujący na WING
 Name:		wdm
 Version:	1.19
 Release:	8
