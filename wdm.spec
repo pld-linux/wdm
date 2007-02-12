@@ -1,5 +1,5 @@
 Summary:	WINGs Display Manager
-Summary(pl):	Display Manager bazuj±cy na WING
+Summary(pl.UTF-8):   Display Manager bazujÄ…cy na WING
 Name:		wdm
 Version:	1.19
 Release:	8
@@ -74,10 +74,10 @@ job, there is nothing like editing these files to tailor them to a
 particular system. This script can be run manually if new window
 managers are installed.
 
-%description -l pl
-wdm jest modyfikacj±/rozszerzeniem xdm dodaj±cym panel logowania o
-wiêkszych mo¿liwo¶ciach. Panel jest oddzielnym programem
-zaimplementowanym z u¿yciem biblioteki widgetów WING z WindowMakera.
+%description -l pl.UTF-8
+wdm jest modyfikacjÄ…/rozszerzeniem xdm dodajÄ…cym panel logowania o
+wiÄ™kszych moÅ¼liwoÅ›ciach. Panel jest oddzielnym programem
+zaimplementowanym z uÅ¼yciem biblioteki widgetÃ³w WING z WindowMakera.
 
 %prep
 %setup -q
