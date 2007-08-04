@@ -25,11 +25,6 @@ BuildRequires:	automake
 Requires:	pam >= 0.99.7.1
 Requires:	rc-scripts
 Obsoletes:	X11-xdm
-Obsoletes:	entrance
-Obsoletes:	gdm
-Obsoletes:	kdm
-Obsoletes:	slim
-Obsoletes:	xdm
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
