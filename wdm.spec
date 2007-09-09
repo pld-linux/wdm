@@ -24,7 +24,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 Requires:	pam >= 0.99.7.1
 Requires:	rc-scripts
-Obsoletes:	X11-xdm
+Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
