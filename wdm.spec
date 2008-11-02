@@ -1,25 +1,25 @@
+# TODO: aclocal, autoconf, automake fix
 Summary:	WINGs Display Manager
 Summary(pl.UTF-8):	Display Manager bazujący na WING
 Name:		wdm
-Version:	1.19
-Release:	9
+Version:	1.28
+Release:	1
 License:	GPL
 Group:		X11
 Source0:	http://voins.program.ru/wdm/%{name}-%{version}.tar.gz
-# Source0-md5:	eacbfec965f2ccf1840ad457cb04a67e
+# Source0-md5:	97d75a5be4fe1d2e232d2a39106a972e
 Source1:	xdm-3331.tar.gz
 # Source1-md5:	bb8feac2f37bb22d708fdfb80efc8417
 Source2:	%{name}.init
 Source3:	%{name}.pamd
 Source4:	%{name}-Xclients.in
 Patch0:		%{name}-aclocal.patch
-Patch1:		%{name}-Makefile.patch
-Patch2:		%{name}-xdm3331.patch
+# Patch1:		%{name}-Makefile.patch
+# Patch2:		%{name}-xdm3331.patch
 Patch3:		%{name}-pam.patch
-Patch4:		%{name}-rdestroyimage.patch
+# Patch4:		%{name}-rdestroyimage.patch
 URL:		http://voins.program.ru/wdm/
 BuildRequires:	WindowMaker-devel
-BuildRequires:	XFree86-devel >= 3.3.2
 BuildRequires:	autoconf
 BuildRequires:	automake
 Requires:	pam >= 0.99.7.1
@@ -76,18 +76,18 @@ zaimplementowanym z użyciem biblioteki widgetów WING z WindowMakera.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch4 -p1
+# %patch0 -p1
+# %patch1 -p1
+# %patch2 -p1
+# %patch4 -p1
 cp -f %{PATCH3} patches
 cp -f %{SOURCE1} .
-cp -f %{SOURCE4} src/config/Xclients.in
+cp -f %{SOURCE4} configs/Xclients.in
 
 %build
-%{__aclocal}
-%{__autoconf}
-%{__automake}
+# %{__aclocal}
+# %{__autoconf}
+# %{__automake}
 %configure \
 	--enable-pam \
 	--with-wdmdir=%{_sysconfdir}/X11/wdm
@@ -102,6 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,security}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
+install -d $RPM_BUILD_ROOT/etc/pam.d/wdm
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
 touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
 
@@ -124,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_sysconfdir}/X11/wdm
 %dir %{_sysconfdir}/X11/wdm/authdir
-%config %{_sysconfdir}/X11/wdm/pixmaps
+%{_datadir}/pixmaps/wdm
 %config %{_sysconfdir}/X11/wdm/wdm-config
 %config %{_sysconfdir}/X11/wdm/wdm-config.in
 %config %{_sysconfdir}/X11/wdm/Xservers
