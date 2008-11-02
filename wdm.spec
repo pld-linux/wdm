@@ -102,7 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,security}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/wdm
-install -d $RPM_BUILD_ROOT/etc/pam.d/wdm
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/wdm
 touch $RPM_BUILD_ROOT/etc/security/blacklist.wdm
 
