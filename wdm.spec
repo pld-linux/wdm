@@ -1,9 +1,10 @@
 # TODO: aclocal, autoconf, automake fix
+# TODO: auth problem - can't login
 Summary:	WINGs Display Manager
 Summary(pl.UTF-8):	Display Manager bazujący na WING
 Name:		wdm
 Version:	1.28
-Release:	1
+Release:	0.1
 License:	GPL
 Group:		X11
 Source0:	http://voins.program.ru/wdm/%{name}-%{version}.tar.gz
