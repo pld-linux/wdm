@@ -77,10 +77,10 @@ zaimplementowanym z użyciem biblioteki widgetów WING z WindowMakera.
 
 %prep
 %setup -q
-# %patch0 -p1
-# %patch1 -p1
-# %patch2 -p1
-# %patch4 -p1
+# %%patch0 -p1
+# %%patch1 -p1
+# %%patch2 -p1
+# %%patch4 -p1
 cp -f %{PATCH3} patches
 cp -f %{SOURCE1} .
 cp -f %{SOURCE4} configs/Xclients.in
